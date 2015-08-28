@@ -16,7 +16,7 @@ for tmethod = {'median', 'mean'}
     X = conv(s.X) ;
     Q = conv(s.Q) ;
     tree = vl_kdtreebuild(X,'ThresholdMethod', tmethod) ;
-    [nn, d2] = vl_kdtreequery(tree, X,Q) ;
+    [nn, d2] = vl_kdtreequery(tree, X, Q) ;
 
     D2 = vl_alldist2(X, Q, 'l2') ;
     [d2_, nn_] = min(D2) ;
@@ -84,4 +84,3 @@ for i=1:size(s.Q,2)
             numel(union(nn(:,i), nn_(:,i))) ;
   assert(overlap > 0.6, 'ANN did not return enough correct nearest neighbors') ;
 end
-

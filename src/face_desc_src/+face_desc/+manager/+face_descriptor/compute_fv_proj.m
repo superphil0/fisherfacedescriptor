@@ -8,7 +8,7 @@ clear;
 run('./startup.m');
 
 % settings
-setName = 'lfw_aligned';
+setName = 'adience';
 expName = 'SIFT_1pix_PCA64_GMM512';
 gamma = 0.25;
 gammaBias = 1;

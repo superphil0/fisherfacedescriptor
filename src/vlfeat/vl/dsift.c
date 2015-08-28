@@ -1,13 +1,15 @@
-/** @file   dsift.c
- ** @brief  Dense SIFT (DSIFT) - Definition
+/** @file dsift.c
+ ** @brief Dense SIFT - Definition
  ** @author Andrea Vedaldi
+ ** @author Brian Fulkerson
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #include "dsift.h"
@@ -18,25 +20,17 @@ GNU GPLv2, or (at your option) any later version.
 #include <string.h>
 
 /**
-@file dsift.h
-@brief Dense SIFT
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
+@page dsift Dense Scale Invariant Feature Transform (DSIFT)
 @author Andrea Vedaldi
 @author Brian Fulkerson
-
-<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
-@section dsift Dense Scale Invariant Feature Transform
+@tableofcontents
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
 
-This module implements a dense version of @ref sift.h "SIFT". This is
+@ref dsift.h implements a dense version of @ref sift.h "SIFT". This is
 an object that can quickly compute descriptors for densely sampled
 keypoints with identical size and orientation. It can be reused for
 multiple images of the same size.
-
-- @ref dsift-intro
-- @ref dsift-usage
-- @ref dsift-tech
-  - @ref dsift-tech-descriptor-dense
-  - @ref dsift-tech-sampling
 
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
 @section dsift-intro Overview
@@ -110,7 +104,7 @@ position (and with null rotation), further simplifications are
 possible. In this case, in fact,
 
 @f{eqnarray*}
-     \mathbf{x} &=& m \sigma \hat \mathbf{x} + T,\\
+     \mathbf{x} &=& m \sigma \hat{\mathbf{x}} + T,\\
  h(t,i,j)
  &=&
  m \sigma \int
@@ -714,7 +708,7 @@ void vl_dsift_process (VlDsiftFilter* self, float const* im)
 
       /* quantize angle */
       nt = vl_mod_2pi_f (angle) * (self->geom.numBinT / (2*VL_PI)) ;
-      bint = vl_floor_f (nt) ;
+      bint = (int) vl_floor_f (nt) ;
       rbint = nt - bint ;
 
       /* write it back */

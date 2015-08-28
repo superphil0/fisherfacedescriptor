@@ -3,11 +3,12 @@
  ** @author Andrea Vedaldi
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #include "mexutils.h"
@@ -20,6 +21,7 @@ enum {
   opt_KL1,
   opt_KJS,
   opt_KINTERS,
+  opt_kernel,
   opt_gamma,
   opt_period,
   opt_window
@@ -30,6 +32,7 @@ vlmxOption options [] = {
   {"kchi2",        0,   opt_KCHI2         },
   {"kjs",          0,   opt_KJS           },
   {"kinters",      0,   opt_KINTERS       },
+  {"kernel",       1,   opt_kernel        },
   {"gamma",        1,   opt_gamma         },
   {"period",       1,   opt_period        },
   {"window",       1,   opt_window        },
@@ -104,6 +107,11 @@ mexFunction(int nout, mxArray *out[],
         break ;
       case opt_KJS:
         kernelType = VlHomogeneousKernelJS ;
+        break ;
+      case opt_kernel:
+        /* make the kernel option argument to be the next option, and
+         hence processed by the code above */
+        next-- ;
         break ;
       case opt_period:
         if (! vlmxIsPlainScalar(optarg)){

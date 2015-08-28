@@ -4,11 +4,12 @@
  ** @brief    Scale Invariant Feature Transform (SIFT) - MEX
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #include <mexutils.h>
@@ -88,7 +89,7 @@ transpose_descriptor (vl_sift_pix* dst, vl_sift_pix* src)
  ** @brief Ordering of tuples by increasing scale
  **
  ** @param a tuple.
- ** @param b tuble.
+ ** @param b tuple.
  **
  ** @return @c a[2] < b[2]
  **/
@@ -238,7 +239,7 @@ mexFunction(int nout, mxArray *out[],
 
     case opt_frames :
       if (!vlmxIsMatrix(optarg, 4, -1)) {
-        mexErrMsgTxt("'Frames' must be a 4 x N matrix.x") ;
+        mexErrMsgTxt("'Frames' must be a 4 x N matrix.") ;
       }
       ikeys_array = mxDuplicateArray (optarg) ;
       nikeys      = mxGetN (optarg) ;

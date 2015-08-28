@@ -1,13 +1,14 @@
-/** @file   getopt_long.c
- ** @brief  getopt_long - Definition
+/** @file getopt_long.c
+ ** @brief getopt_long - Definition
  ** @author Andrea Vedaldi
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 /**
@@ -48,7 +49,7 @@ int    optreset ;
  ** This function extract long and short options from the argument
  ** list @a argv of @a argc entries.
  **
- ** A short options sequence is introduced by a singe dash character
+ ** A short options sequence is introduced by a single dash character
  ** @c -. Each short option is described by a single character in the
  ** string @a optstring, possibly followed by a @c : character to
  ** denote a (mandatory) argument of the short option. A short option

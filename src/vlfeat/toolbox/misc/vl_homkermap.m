@@ -9,18 +9,11 @@
 %
 %   The function accepts the following options:
 %
-%   KChi2::
-%     Compute the map for the Chi2 kernel.
-%
-%   KINTERS::
-%     Compute the map for the intersection kernel.
-%
-%   KL1::
-%     Same as KINTERS, but deprecated as the name is not fully
-%     accurate.
-%
-%   KJS::
-%     Compute the map for the JS (Jensen-Shannon) kernel.
+%   Kernel:: KCHI2
+%     One of KCHI2 (Chi2 kernel), KINTERS (intersection kernel), KJS
+%     (Jensen-Shannon kernel). The 'Kernel' option name can be omitted,
+%     i.e. VL_HOMKERMAP(..., 'kernel', 'kchi2') has the same effect of
+%     VL_HOMKERMAP(..., 'kchi2').
 %
 %   Period:: [automatically tuned]
 %     Set the period of the kernel specturm. The approximation is
@@ -71,8 +64,8 @@
 
 % Authors: Andrea Vedaldi
 
-% AUTORIGHTS
-% Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+% Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+% All rights reserved.
 %
-% This file is part of VLFeat, available under the terms of the
-% GNU GPLv2, or (at your option) any later version.
+% This file is part of the VLFeat library and is made available under
+% the terms of the BSD license (see the COPYING file).

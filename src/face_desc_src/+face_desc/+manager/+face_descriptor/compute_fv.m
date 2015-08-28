@@ -56,8 +56,10 @@ for idxSplit = 1:numSplits
     featDim = conf.faceDescriptor.get_dim();    
         
     % split the images across workers
-    numWorkers = max(1, matlabpool('size'));
     
+    nums = gcp('nocreate');
+    nums = nums.NumWorkers;
+    numWorkers = max(1, nums);
     % workers loop
 %     for idxWorker = 1:numWorkers
     parfor idxWorker = 1:numWorkers

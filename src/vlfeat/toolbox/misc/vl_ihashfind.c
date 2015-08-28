@@ -4,11 +4,12 @@
  ** @brief    BINSUM - MEX
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #include <mexutils.h>
@@ -74,7 +75,7 @@ mexFunction(int nout, mxArray *out[],
   enum { OUT_SEL } ;
 
   vl_uint32 const * next ;
-  vl_uint32       * sel ;
+  vl_uint32 * sel ;
   vl_uint8 const  * id ;
   vl_uint8 const  * x ;
 
@@ -94,7 +95,7 @@ mexFunction(int nout, mxArray *out[],
     mexErrMsgTxt("NEXT must be UINT32.") ;
   }
 
-  if(! mxIsNumeric(in[IN_X])   || mxGetClassID(in[IN_X])   != mxUINT8_CLASS) {
+  if(! mxIsNumeric(in[IN_X])   || mxGetClassID(in[IN_X])!= mxUINT8_CLASS) {
     mexErrMsgTxt("X must be UINT8") ;
   }
 
@@ -153,6 +154,11 @@ mexFunction(int nout, mxArray *out[],
     unsigned int h1, h2 ;
     unsigned int j, p = 0 ;
 
+    if (is_null (x + i * ndims, ndims)) {
+      *sel++ = 0 ;
+      continue ;
+    }
+
     h1 = fnv_hash(x + i * ndims, ndims) % K ;
     h2 = h1 | 0x1 ; /* this needs to be odd */
 
@@ -168,6 +174,7 @@ mexFunction(int nout, mxArray *out[],
     /* handle extended table */
     while (! is_null (id + p * ndims,                ndims) &&
            ! is_equal(id + p * ndims, x + i * ndims, ndims)) {
+      if (next[p] == 0) break ;
       p = next [p] - 1 ;
     }
 

@@ -4,11 +4,12 @@
  ** @brief    BINSUM - MEX
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #include <mexutils.h>
@@ -172,6 +173,12 @@ mexFunction(int nout, mxArray *out[],
     unsigned int h1, h2 ;
     unsigned int j, p = 0 ;
 
+    /* cannot hash null labels */
+    if (is_null (x + i * ndims, ndims)) {
+      vlmxError(vlmxErrInvalidArgument, "The %d column of X is null.", i+1) ;
+      continue ;
+    }
+
     h1 = fnv_hash(x + i * ndims, ndims) % K ;
     h2 = h1 | 0x1 ; /* this needs to be odd */
 
@@ -184,7 +191,9 @@ mexFunction(int nout, mxArray *out[],
       p = h1 % K ;
     }
 
-    /* search or make a free slot in the bucket */
+    /* if after scanning the K elements in the hash table an empty/matching
+      bucket is still
+       not found, start using next to go into the overflow table */
     while (! is_null (id + p * ndims,                ndims) &&
            ! is_equal(id + p * ndims, x + i * ndims, ndims)) {
       if (next [p] > res) {

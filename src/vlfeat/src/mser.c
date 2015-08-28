@@ -4,11 +4,12 @@
  ** @internal
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-09 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available in the terms of the GNU
-General Public License version 2.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #define VL_MSER_DRIVER_VERSION 0.2
@@ -353,7 +354,7 @@ main(int argc, char **argv)
     }
 
     if (verbose) {
-      printf("mser:   image is %d by %d pixels\n",
+      printf("mser:   image is %" VL_FMT_SIZE " by %" VL_FMT_SIZE " pixels\n",
              pim. width,
              pim. height) ;
     }
@@ -444,7 +445,7 @@ main(int argc, char **argv)
       /* allocate buffer */
       datainv = malloc(vl_pgm_get_npixels (&pim) *
                   vl_pgm_get_bpp       (&pim)) ;
-      for (i = 0; i < vl_pgm_get_npixels (&pim); i++) {
+      for (i = 0; i < (signed)vl_pgm_get_npixels (&pim); i++) {
         datainv[i] = ~data[i]; /* 255 - data[i] */
       }
 

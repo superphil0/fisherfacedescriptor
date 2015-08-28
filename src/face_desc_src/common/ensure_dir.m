@@ -5,7 +5,8 @@
 function ensure_dir(Dir)
 
     if ispc
-        system(sprintf('mkdir %s', Dir));
+        mkdir(Dir);
+        %system(sprintf('mkdir %s', Dir));
     else
         system(sprintf('mkdir -p %s', Dir));
     end

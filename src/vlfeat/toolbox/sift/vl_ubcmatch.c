@@ -4,12 +4,12 @@
  ** @author  Andrea Vedaldi
  **/
 
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
-
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #include <mexutils.h>
@@ -71,6 +71,9 @@ typedef struct
             ((PROMOTE_##MXC) L1_pt[bin]) -                              \
             ((PROMOTE_##MXC) L2_pt[bin]) ;                              \
           acc += delta*delta ;                                          \
+          if (acc >= second_best) {                                     \
+            break ;                                                     \
+          }                                                             \
         }                                                               \
                                                                         \
         /* Filter the best and second best matching point. */           \
@@ -115,9 +118,9 @@ mexFunction(int nout, mxArray *out[],
   enum {L1=0,L2,THRESH} ;
   enum {MATCHES=0,D} ;
 
-  /* ------------------------------------------------------------------
-  **                                                Check the arguments
-  ** --------------------------------------------------------------- */
+  /* -----------------------------------------------------------------
+  **                                               Check the arguments
+  ** -------------------------------------------------------------- */
   if (nin < 2) {
     mexErrMsgTxt("At least two input arguments required");
   } else if (nout > 2) {
@@ -156,9 +159,9 @@ mexFunction(int nout, mxArray *out[],
     mexErrMsgTxt("At most three arguments are allowed") ;
   }
 
-  /* ------------------------------------------------------------------
-  **                                                         Do the job
-  ** --------------------------------------------------------------- */
+  /* -----------------------------------------------------------------
+  **                                                        Do the job
+  ** -------------------------------------------------------------- */
   {
     Pair* pairs_begin = (Pair*) mxMalloc(sizeof(Pair) * (K1+K2)) ;
     Pair* pairs_iterator = pairs_begin ;

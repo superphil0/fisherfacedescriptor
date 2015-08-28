@@ -11,16 +11,16 @@ prms = struct;
 prms.expName = 'dummy';
 
 % set name ('lfw_aligned', 'lfw_vj', or 'lfw_funneled')
-prms.setName = 'lfw_aligned';
+prms.setName = 'adience';
 
 % initialise with unrestricted set-up (train: unrest, test: rest)
 % training setting and view
 prms.trainSettingName = 'unrest';
-prms.trainViewName = 'eval';
+prms.trainViewName = 'adience';
 
 % testing setting and view
 prms.testSettingName = 'rest';
-prms.testViewName = 'eval';
+prms.testViewName = 'adience';
 
 % face verification model ('metric', 'metric_sim', 'diag_metric')
 prms.modelType = 'metric';
@@ -73,7 +73,7 @@ conf.exp.testing.settingName = prms.testSettingName;
 conf.exp.trainDataDir = sprintf('%s/train_data/%s_%s/', conf.database.sharedDir, conf.exp.training.settingName, conf.exp.training.viewName);
 
 % path to image ids
-conf.exp.imgIdsPath = sprintf('%s/img_ids.mat', conf.exp.trainDataDir);
+conf.exp.imgIdsPath = sprintf('%s/img_idsaligned.mat', conf.exp.trainDataDir);
 
 % paths to training & validation pairs
 conf.exp.trainPairsPath = sprintf('%s/pairs_train.mat', conf.exp.trainDataDir);
@@ -81,7 +81,7 @@ conf.exp.valPairsPath = sprintf('%s/pairs_val.mat', conf.exp.trainDataDir);
 conf.exp.testPairsPath = sprintf('%s/pairs_test.mat', conf.exp.trainDataDir);
 
 % number of splits
-conf.numSplits = 10;
+conf.numSplits = 5;
 
 %% classifier instance
 

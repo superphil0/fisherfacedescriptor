@@ -25,9 +25,9 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="nmake /f Makefile.mak"
-				ReBuildCommandLine="nmake /f Makefile.mak clean all"
-				CleanCommandLine="nmake /f Makefile.mak clean"
+				BuildCommandLine="set VCInstallDir=$(VCInstallDir)&#x0D;&#x0A;set WindowsSdkDir=$(WindowsSdkDir)&#x0D;&#x0A;nmake /f Makefile.mak DEBUG=yes&#x0D;&#x0A;"
+				ReBuildCommandLine="set VCInstallDir=$(VCInstallDir)&#x0D;&#x0A;set WindowsSdkDir=$(WindowsSdkDir)&#x0D;&#x0A;nmake /f Makefile.mak distclean all DEBUG=yesl"
+				CleanCommandLine="set VCInstallDir=$(VCInstallDir)&#x0D;&#x0A;set WindowsSdkDir=$(WindowsSdkDir)&#x0D;&#x0A;nmake /f Makefile.mak  clean"
 				Output=""
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				IncludeSearchPath=""
@@ -145,6 +145,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vl\array.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\array.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\covdet.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\covdet.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vl\dsift.c"
 				>
 			</File>
@@ -173,6 +189,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vl\gmm.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\gmm.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vl\heap-def.h"
 				>
 			</File>
@@ -182,6 +206,14 @@
 			</File>
 			<File
 				RelativePath=".\vl\hikmeans.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\hog.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\hog.h"
 				>
 			</File>
 			<File
@@ -253,11 +285,35 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vl\lbp.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\lbp.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\liop.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\liop.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vl\mathop.c"
 				>
 			</File>
 			<File
 				RelativePath=".\vl\mathop.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\mathop_avx.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\mathop_avx.h"
 				>
 			</File>
 			<File
@@ -274,6 +330,14 @@
 			</File>
 			<File
 				RelativePath=".\vl\mser.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\pegasos.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\pegasos.h"
 				>
 			</File>
 			<File
@@ -313,6 +377,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vl\scalespace.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\scalespace.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vl\shuffle-def.h"
 				>
 			</File>
@@ -325,11 +397,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\vl\slic.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\slic.h"
+				>
+			</File>
+			<File
 				RelativePath=".\vl\stringop.c"
 				>
 			</File>
 			<File
 				RelativePath=".\vl\stringop.h"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\svmdataset.c"
+				>
+			</File>
+			<File
+				RelativePath=".\vl\svmdataset.h"
 				>
 			</File>
 		</Filter>
@@ -369,6 +457,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\toolbox\misc\vl_cummax.c"
+				>
+			</File>
+			<File
 				RelativePath=".\toolbox\sift\vl_dsift.c"
 				>
 			</File>
@@ -381,11 +473,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\toolbox\gmm\vl_gmm.c"
+				>
+			</File>
+			<File
 				RelativePath=".\toolbox\kmeans\vl_hikmeans.c"
 				>
 			</File>
 			<File
 				RelativePath=".\toolbox\kmeans\vl_hikmeanspush.c"
+				>
+			</File>
+			<File
+				RelativePath=".\toolbox\misc\vl_hog.c"
+				>
+			</File>
+			<File
+				RelativePath=".\toolbox\misc\vl_homkermap.c"
 				>
 			</File>
 			<File
@@ -441,7 +545,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\toolbox\misc\vl_lbp.c"
+				>
+			</File>
+			<File
 				RelativePath=".\toolbox\misc\vl_localmax.c"
+				>
+			</File>
+			<File
+				RelativePath=".\toolbox\misc\vl_maketrainingset.c"
 				>
 			</File>
 			<File
@@ -461,6 +573,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\toolbox\misc\vl_sampleinthist.c"
+				>
+			</File>
+			<File
 				RelativePath=".\toolbox\misc\vl_samplinthist.c"
 				>
 			</File>
@@ -474,6 +590,14 @@
 			</File>
 			<File
 				RelativePath=".\toolbox\misc\vl_simdctrl.c"
+				>
+			</File>
+			<File
+				RelativePath=".\toolbox\slic\vl_slic.c"
+				>
+			</File>
+			<File
+				RelativePath=".\toolbox\misc\vl_svmpegasos.c"
 				>
 			</File>
 			<File
@@ -531,10 +655,6 @@
 		</Filter>
 		<File
 			RelativePath=".\Makefile.mak"
-			>
-		</File>
-		<File
-			RelativePath=".\readme.txt"
 			>
 		</File>
 	</Files>

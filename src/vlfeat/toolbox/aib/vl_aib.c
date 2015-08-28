@@ -5,11 +5,12 @@
  ** @brief    AIB MEX driver
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 #include <mexutils.h>
@@ -45,11 +46,10 @@ vlmxOption  options [] = {
  ** - we attach this cluster to the root as the very last step (as we
  **   do not want to change other nodes.
  **
- ** In this way,
  **/
 
 static void
-cluster_null_nodes (vl_uint32* parents, vl_uint32 nvalues, double *cost)
+cluster_null_nodes (vl_uint32* parents, vl_uint32 nvalues, double *cost, int verbosity)
 {
   vl_uint32 nnull = 0 ;
   vl_uint32 n ;
@@ -97,8 +97,10 @@ cluster_null_nodes (vl_uint32* parents, vl_uint32 nvalues, double *cost)
   dp = nvalues ;
   ep = 2 * nvalues - 2 - nnull ;
 
-  mexPrintf("a:%u b:%u c:%u d:%u e:%u dp:%u ep:%u\n",
-            a,b,c,d,e,dp,ep) ;
+  if (verbosity > 1) {
+    mexPrintf("vl_aib: a:%u b:%u c:%u d:%u e:%u dp:%u ep:%u\n",
+              a,b,c,d,e,dp,ep) ;
+  }
 
   /* search first leaf that has been merged */
   {
@@ -114,9 +116,10 @@ cluster_null_nodes (vl_uint32* parents, vl_uint32 nvalues, double *cost)
     }
   }
 
-  mexPrintf("nnull:%u\n",nnull) ;
-  mexPrintf("nvalues:%u\n",nvalues) ;
-  mexPrintf("first:%u\n",first) ;
+  if (verbosity > 1) {
+    mexPrintf("vl_aib: nnull:%u, nvalues:%u, first: %u\n",
+              nnull,nvalues,first) ;
+  }
 
   /* move internal node block [dp:ep] to [d:e] */
   for (n = 0 ; n < e ; ++ n) {
@@ -137,9 +140,11 @@ cluster_null_nodes (vl_uint32* parents, vl_uint32 nvalues, double *cost)
     }
   }
 
-  mexPrintf("first null %u parent seto to last_intermed:%u\n",
-            n,
-            last_intermed)  ;
+  if (verbosity > 1) {
+    mexPrintf("vl_aib:first null %u parent seto to last_intermed:%u\n",
+              n,
+              last_intermed)  ;
+  }
 
   /* chain rest of intermediate nodes */
   for (; n < a ; ++ n) {
@@ -150,15 +155,21 @@ cluster_null_nodes (vl_uint32* parents, vl_uint32 nvalues, double *cost)
     }
   }
 
-  mexPrintf("after chaining other nulls last_intermed:%u\n", last_intermed)  ;
+  if (verbosity > 1) {
+    mexPrintf("vl_aib: after chaining other nulls last_intermed:%u\n", last_intermed)  ;
+  }
 
   /* make last_intermed point to d */
   parents [last_intermed] = d ;
 
   /* change parent of first to be last_intermed */
-  mexPrintf("parent of %u (first) was %u\n", first, parents[first]) ;
+  if (verbosity > 1) {
+    mexPrintf("vl_aib: parent of %u (first) was %u\n", first, parents[first]) ;
+  }
   parents [first] = last_intermed ;
-  mexPrintf("parent of %u (first) is now %u\n", first, parents[first]) ;
+  if (verbosity > 1) {
+    mexPrintf("vl_aib: parent of %u (first) is now %u\n", first, parents[first]) ;
+  }
 
   /* fix cost too (reall that the fist entry is the cost before
    any merge) */
@@ -234,7 +245,7 @@ mexFunction(int nout, mxArray *out[],
   }
 
   if (verbose) {
-    mexPrintf("aib: cluster null:    %d", cluster_null) ;
+    mexPrintf("vl_aib: clustering null probability variables: %s\n", VL_YESNO(cluster_null)) ;
   }
 
   /* -----------------------------------------------------------------
@@ -256,6 +267,7 @@ mexFunction(int nout, mxArray *out[],
     }
 
     aib = vl_aib_new (Pcx, nvalues, nlabels) ;
+    vl_aib_set_verbosity (aib, verbose) ;
     vl_aib_process (aib);
 
     aparents = vl_aib_get_parents (aib);
@@ -267,7 +279,7 @@ mexFunction(int nout, mxArray *out[],
     vl_aib_delete(aib);
 
     if (cluster_null) {
-      cluster_null_nodes (parents, nvalues, (nout == 0) ? 0 : cost) ;
+      cluster_null_nodes (parents, nvalues, (nout == 0) ? 0 : cost, verbose) ;
     }
 
     /* save back parents */

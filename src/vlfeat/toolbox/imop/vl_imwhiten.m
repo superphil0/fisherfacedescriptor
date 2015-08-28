@@ -1,5 +1,5 @@
 function J=vl_imwhiten(I,alpha,cutoff)
-% VL_IMWHITEN  Whiten image
+% VL_IMWHITEN  Whiten an image
 %   J = VL_IMWHITEN(I,ALPHA) approximatively whitens the power spectrum
 %   of the natural image I. The algorithm assumes that the modulus of
 %   the spectrum decays as 1/f^ALPHA (f is the frequency).
@@ -12,8 +12,14 @@ function J=vl_imwhiten(I,alpha,cutoff)
 %
 %   See also: VL_HELP().
 
-if ~exist('alpha'),  alpha = 1 ; end
-if ~exist('cutoff'), cutoff = [] ; end
+% Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+% All rights reserved.
+%
+% This file is part of the VLFeat library and is made available under
+% the terms of the BSD license (see the COPYING file).
+
+if ~exist('alpha','var'),  alpha = 1 ; end
+if ~exist('cutoff','var'), cutoff = [] ; end
 
 [M,N]=size(I) ;
 

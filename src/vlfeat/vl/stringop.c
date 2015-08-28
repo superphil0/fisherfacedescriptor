@@ -1,23 +1,36 @@
-/** @file   stringop.c
+/** @file stringop.c
+ ** @brief String operations - Definition
  ** @author Andrea Vedaldi
- ** @brief  String operations - Definition
  **/
 
-/* AUTORIGHTS
-Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+/*
+Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+All rights reserved.
 
-This file is part of VLFeat, available under the terms of the
-GNU GPLv2, or (at your option) any later version.
+This file is part of the VLFeat library and is made available under
+the terms of the BSD license (see the COPYING file).
 */
 
 /**
-@file   stringop.h
-@brief  String operations
+@file stringop.h
+@brief String operations
 @author Andrea Vedaldi
+@tableofcontents
 
 @ref stringop.h implements basic string operations. All functions that
 write to strings use range checking, which makes them safer than some
 standard POSIX equivalent (see @ref vl-stringop-err).
+
+@section vl-stringop-enumeration Enumerations
+
+@ref stringop.h defines a simple enumeration data type. This is given
+by an array of enumeration members, represented by
+instances of the ::VlEnumerator strucutre, each storing a
+name-value pair. The enumeration must end by a member whose
+name is set to @c NULL.
+
+Use ::vl_enumeration_get and ::vl_enumeration_get_casei
+to retrieve an enumeration member by name.
 
 @section vl-stringop-file-protocols File protocols
 
@@ -376,3 +389,74 @@ vl_string_casei_cmp (const char * string1, const char * string2)
     (int)tolower((char unsigned)*string1) -
     (int)tolower((char unsigned)*string2) ;
 }
+
+/* -------------------------------------------------------------------
+ *                                                       VlEnumeration
+ * ---------------------------------------------------------------- */
+
+/** @brief Get a member of an enumeration by name
+ ** @param enumeration array of ::VlEnumerator objects.
+ ** @param name the name of the desired member.
+ ** @return enumerator matching @a name.
+ **
+ ** If @a name is not found in the enumeration, then the value
+ ** @c NULL is returned.
+ **
+ ** @sa vl-stringop-enumeration
+ **/
+
+VL_EXPORT VlEnumerator *
+vl_enumeration_get (VlEnumerator const *enumeration, char const *name)
+{
+  assert(enumeration) ;
+  while (enumeration->name) {
+    if (strcmp(name, enumeration->name) == 0) return (VlEnumerator*)enumeration ;
+    enumeration ++ ;
+  }
+  return NULL ;
+}
+
+/** @brief Get a member of an enumeration by name (case insensitive)
+ ** @param enumeration array of ::VlEnumerator objects.
+ ** @param name the name of the desired member.
+ ** @return enumerator matching @a name.
+ **
+ ** If @a name is not found in the enumeration, then the value
+ ** @c NULL is returned. @a string is matched case insensitive.
+ **
+ **  @sa vl-stringop-enumeration
+ **/
+
+VL_EXPORT VlEnumerator *
+vl_enumeration_get_casei (VlEnumerator const *enumeration, char const *name)
+{
+  assert(enumeration) ;
+  while (enumeration->name) {
+    if (vl_string_casei_cmp(name, enumeration->name) == 0) return (VlEnumerator*)enumeration ;
+    enumeration ++ ;
+  }
+  return NULL ;
+}
+
+/** @brief Get a member of an enumeration by value
+ ** @param enumeration array of ::VlEnumerator objects.
+ ** @param value value of the desired member.
+ ** @return enumerator matching @a value.
+ **
+ ** If @a value is not found in the enumeration, then the value
+ ** @c NULL is returned.
+ **
+ ** @sa vl-stringop-enumeration
+ **/
+
+VL_EXPORT VlEnumerator *
+vl_enumeration_get_by_value (VlEnumerator const *enumeration, vl_index value)
+{
+  assert(enumeration) ;
+  while (enumeration->name) {
+    if (enumeration->value == value) return (VlEnumerator*)enumeration ;
+    enumeration ++ ;
+  }
+  return NULL ;
+}
+

@@ -17,8 +17,10 @@ totalFeatLimit = 1e6;
 
 imgNames = database.images;
 
-numSplits = numel(imgIds);
-numWorkers = max(1, 4);
+numSplits = numel(imgIds);conf
+nums = gcp('nocreate');
+nums = nums.NumWorkers;
+numWorkers = max(1, nums);
 
 %% split loop
 for idxSplit = 1:numSplits
@@ -51,7 +53,7 @@ for idxSplit = 1:numSplits
 
     % images loop
     parfor idxWorker = 1:numWorkers
-%     for idxWorker = 1:numWorkers
+ %    for idxWorker = 1:numWorkers
         
         % random seed
         rng(conf.rngSeed);
@@ -68,7 +70,7 @@ for idxSplit = 1:numSplits
             idxImg = workerImgList{idxWorker}(k);
 
             imName = imgNamesSplit{idxImg};
-            imId = imgIdsSplit(idxImg);
+            imId = imgIdsSplit(idxImg)
 
             % load image
 %             imPath = sprintf('%s/%s', conf.database.imDir, imName);

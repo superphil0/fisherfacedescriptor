@@ -16,8 +16,8 @@ codeDim = conf.exp.dimredFeatDim;
 
 %% split loop
 
-parfor idxSplit = 1:numSplits
-% for idxSplit = 1:numSplits
+for idxSplit = 1:numSplits
+ %for idxSplit = 1:numSplits
 
     dimredDir = sprintf('%s/%d/', conf.exp.dimredDir, idxSplit);
     featDir = sprintf('%s/%s/%d/', conf.exp.featDir, conf.descName, idxSplit);

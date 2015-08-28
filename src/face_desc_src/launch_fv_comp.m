@@ -11,7 +11,7 @@ isCluster = false;
 prms.expName = 'SIFT_1pix_PCA64_GMM512';
 
 % image set name
-prms.setName = 'lfw';
+prms.setName = 'adience';
 
 % 'unrest': unrestricted, 'rest': restricted
 prms.trainSettingName = 'unrest';

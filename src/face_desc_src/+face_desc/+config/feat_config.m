@@ -7,10 +7,10 @@ function conf = feat_config(varargin)
 
 prms = struct;
 prms.expName = 'dummy';
-prms.setName = 'lfw_aligned';
+prms.setName = 'adience';
 
 prms.trainSettingName = 'unrest';
-prms.trainViewName = 'eval';
+prms.trainViewName = 'adience';
 
 prms = vl_argparse(prms, varargin);
 
@@ -25,7 +25,7 @@ familyDir = '../data/';
 conf.database.setDir = sprintf('%s/%s/', familyDir, prms.setName);
 conf.database.sharedDir = sprintf('%s/shared/', familyDir);
 
-conf.database.dbPath = sprintf('%s/info/database.mat', conf.database.sharedDir);
+conf.database.dbPath = sprintf('%s/info/databaseadiencealigned.mat', conf.database.sharedDir);
 
 conf.database.imDir = sprintf('%s/images/', conf.database.setDir);
 conf.database.imPath = sprintf('%s/images_preproc/all_img.mat', conf.database.setDir);
@@ -47,7 +47,7 @@ conf.exp.training.settingName = prms.trainSettingName;
 conf.exp.trainDataDir = sprintf('%s/train_data/%s_%s/', conf.database.sharedDir, conf.exp.training.settingName, conf.exp.training.viewName);
 
 % path to image ids
-conf.exp.imgIdsPath = sprintf('%s/img_ids.mat', conf.exp.trainDataDir);
+conf.exp.imgIdsPath = sprintf('%s/img_idsaligned.mat', conf.exp.trainDataDir);
 
 %% face descriptor
 

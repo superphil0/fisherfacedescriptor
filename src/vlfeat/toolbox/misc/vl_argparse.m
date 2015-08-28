@@ -29,11 +29,11 @@ function [conf, args] = vl_argparse(conf, args, varargin)
 
 % Authors: Andrea Vedaldi
 
-% AUTORIGHTS
-% Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+% Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+% All rights reserved.
 %
-% This file is part of VLFeat, available under the terms of the
-% GNU GPLv2, or (at your option) any later version.
+% This file is part of the VLFeat library and is made available under
+% the terms of the BSD license (see the COPYING file).
 
 if ~isstruct(conf), error('CONF must be a structure') ; end
 
@@ -48,6 +48,9 @@ end
 
 for ai = 1:2:length(args)
   paramName = args{ai} ;
+  if ~ischar(paramName)
+    error('The name of the parameter number %d is not a string.', (ai-1)/2+1) ;
+  end
   value = args{ai+1} ;
   if isfield(conf,paramName)
     conf.(paramName) = value ;

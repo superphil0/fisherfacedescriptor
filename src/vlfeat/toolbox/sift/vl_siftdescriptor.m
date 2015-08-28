@@ -6,7 +6,7 @@
 %   GRAD(2,:,:) contains the gradient angle (measured in radians,
 %   clockwise, starting from the X axis -- this assumes that the Y
 %   axis points down). The matrix F contains one column per keypoint
-%   with the X, Y, SGIMA and ANLGE parameters.
+%   with the X, Y, SIGMA and ANGLE parameters.
 %
 %   In order to match the standard SIFT descriptor, the gradient GRAD
 %   should be calculated after mapping the image to the keypoint
@@ -46,8 +46,8 @@
 %
 %  See also: VL_SIFT(), VL_HELP().
 
-% AUTORIGHTS
-% Copyright (C) 2007-10 Andrea Vedaldi and Brian Fulkerson
+% Copyright (C) 2007-12 Andrea Vedaldi and Brian Fulkerson.
+% All rights reserved.
 %
-% This file is part of VLFeat, available under the terms of the
-% GNU GPLv2, or (at your option) any later version.
+% This file is part of the VLFeat library and is made available under
+% the terms of the BSD license (see the COPYING file).

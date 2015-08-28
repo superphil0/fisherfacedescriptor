@@ -9,13 +9,13 @@ isCluster = false;
 
 %% aligned LFW images, unrestricted setting, joint low-rank metric-similarity learning
  
-prms.setName = 'lfw_aligned';
+prms.setName = 'adience';
 prms.expName = 'SIFT_1pix_PCA64_GMM512';
 prms.trainSettingName = 'unrest';
  
 prms.modelType = 'metric_sim';
 gammaSet = 0.25;
-gammaBiasSet = 10;
+gammaBiasSet = 5;
 
 prms.descName = 'poolfv';
 prms.useMirrorFeat = true;
