@@ -105,7 +105,7 @@ for j= -5:1:5
 end
 
 %% endresult
-lambda = 0.01;
+lambda = 0.1;
 ids = cell2mat(imgIds(1:4)');
 trainingset = X(:,ids);
 labels = database.gender(ids);
