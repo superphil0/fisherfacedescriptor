@@ -77,46 +77,56 @@ lambdainit = 10;
 maxIter = 1000;
 
 
-%first make n sets train with n-1 test with nth
+% test with different lambdas
+startup;
+
+for lambda= 0.025 
+    erg = [];  
+% make n sets train with n-1 test with nth
 % do it k-fold so all permutations
 % C = 1/lambda
-    startup;
-
-for j= -5:1:5
-    lambda = lambdainit ^j;
-    erg = 0;
     set = 1:5;
     for i = set
         indices = setdiff(set,i);
         ids = cell2mat(imgIds(indices)');
         labels = database.gender(ids);
-        trainingset = X(:,ids);
-        % train data on training set
         testset = X(:,imgIds{i});
+        trainingset = X(:,ids);
+        
+        % train data on training set
+
         [w b info] = vl_svmtrain(trainingset, labels, lambda, 'MaxNumIterations', maxIter);
         result = w'*testset+b;
         result(result>0) = 1;
         result(result<0) = -1;
         r = database.gender(imgIds{i}) == result';
-        erg = erg + (sum(r)/size(imgIds{i},1));
+        erg = [erg (sum(r)/size(imgIds{i},1))];
     end
-    
-    disp([num2str(erg/5) ' with ' num2str(lambda)]);
+    disp([num2str(erg) ' with ' num2str(lambda)]);
 end
-
-%% endresult
-lambda = 0.1;
+mean(erg)
+std(erg)
+%% adience result
+% train 100 times with all data 4 from 5 folds test on 5th fold (as 
+% specified in the adience benchmark
+lambda = 0.025;
 ids = cell2mat(imgIds(1:4)');
 trainingset = X(:,ids);
 labels = database.gender(ids);
-[w b info] = vl_svmtrain(trainingset, labels, lambda, 'MaxNumIterations', maxIter);
-result = w'*testset+b;
-result(result>0) = 1;
-result(result<0) = -1;
-r = database.gender(imgIds{5}) == result';
-sum(r)/ size(imgIds{5},1)
-% test data
+all = 0;
+for i = 1:100
+    [w b info] = vl_svmtrain(trainingset, labels, lambda, 'MaxNumIterations', maxIter);
+    result = w'*testset+b;
+    result(result>0) = 1;
+    result(result<0) = -1;
+    r = database.gender(imgIds{5}) == result';
+    one = sum(r)/ size(imgIds{5},1);
+    all= all+one;
+end
+disp(num2str(all/100));
 
-% save results
+%% find images which weren't matched and show them
+allImg = load('../data/adience/images_preproc/all_img.mat');
+idserror = imgIds{5}(r==1);
+database.img
 
-% pick best C value

@@ -57,15 +57,14 @@ face_desc.prep_img.crop_adience
 allImg = load('../data/adience/images_preproc/all_img.mat');
 faces = allImg.faceImg;
 split = size(faces,2) / 10;
-for i = 2:10
+for i = 1:10
     features = face_desc.manager.face_descriptor.get_FV_Proj(faces((1:split)+(i-1)*split));
     save(['featuresall' num2str(i) '.mat'], 'features');
 end
-
 %% build trainingset
-load('../data/shared/info/databaseadience.mat', 'database');
+load('../data/shared/info/databaseadiencealigned.mat', 'database');
 % already in right splits
-load('../data/shared/train_data/unrest_adience/img_ids.mat', 'imgIds');
+load('../data/shared/train_data/unrest_adience/img_idsaligned.mat', 'imgIds');
 load('featuresfrontaligned.mat', 'features');
 
 % modification is done so to keep compatibility to framework
@@ -77,50 +76,56 @@ end
 lambdainit = 10;
 maxIter = 1000;
 
-for i =1:5
-    imgIds{i} = (1:500) +(i-1)*500;
-end
-%first make n sets train with n-1 test with nth
+
+% test with different lambdas
+startup;
+
+for lambda= 0.025 
+    erg = [];  
+% make n sets train with n-1 test with nth
 % do it k-fold so all permutations
 % C = 1/lambda
-    startup;
-
-set = 1:5;
-for j= -5:1:5
-    lambda = lambdainit ^j;
-    erg = 0;
+    set = 1:5;
     for i = set
-        foldIndices = setdiff(set,i);
-        labels = database.gender(cell2mat(imgIds(foldIndi);
-        trainingset = X(:,imgIds{i});
+        indices = setdiff(set,i);
+        ids = cell2mat(imgIds(indices)');
+        labels = database.gender(ids);
         testset = X(:,imgIds{i});
+        trainingset = X(:,ids);
+        
         % train data on training set
-    
+
         [w b info] = vl_svmtrain(trainingset, labels, lambda, 'MaxNumIterations', maxIter);
         result = w'*testset+b;
         result(result>0) = 1;
         result(result<0) = -1;
         r = database.gender(imgIds{i}) == result';
-        erg = erg + (sum(r)/size(imgIds{i},2));
+        erg = [erg (sum(r)/size(imgIds{i},1))];
     end
-    
-    disp([num2str(erg/4) ' with ' num2str(lambda)]);
+    disp([num2str(erg) ' with ' num2str(lambda)]);
 end
-
-%% endresult
-
-lambda = 10;
-ids = cell2mat(imgIds(1:4));
+mean(erg)
+std(erg)
+%% adience result
+% train 100 times with all data 4 from 5 folds test on 5th fold (as 
+% specified in the adience benchmark
+lambda = 0.025;
+ids = cell2mat(imgIds(1:4)');
 trainingset = X(:,ids);
 labels = database.gender(ids);
-[w b info] = vl_svmtrain(trainingset, labels, lambda, 'MaxNumIterations', maxIter);
-result = w'*testset+b;
-result(result>0) = 1;
-result(result<0) = -1;
-r = database.gender(imgIds{5}) == result';
-sum(r)/ size(imgIds{5},2)
-% test data
+all = 0;
+for i = 1:100
+    [w b info] = vl_svmtrain(trainingset, labels, lambda, 'MaxNumIterations', maxIter);
+    result = w'*testset+b;
+    result(result>0) = 1;
+    result(result<0) = -1;
+    r = database.gender(imgIds{5}) == result';
+    one = sum(r)/ size(imgIds{5},1);
+    all= all+one;
+end
+disp(num2str(all/100));
 
-% save results
+%% find images which weren't matched and show them
+idserror = imgIdsr==0;
+databse.img
 
-% pick best C value

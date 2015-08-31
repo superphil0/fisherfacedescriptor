@@ -5,6 +5,7 @@
 #include <vector>
 #include <cassert>
 #include <cmath>
+#include <algorithm>
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
