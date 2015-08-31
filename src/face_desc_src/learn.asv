@@ -104,8 +104,9 @@ for lambda= 0.025
     end
     disp([num2str(erg) ' with ' num2str(lambda)]);
 end
-mean(erg)
-std(erg)
+disp(['mean correct classifications: ' num2str(mean(erg))]);
+disp(['var correct classifications: ' num2str(std(erg))]);
+
 %% adience result
 % train 100 times with all data 4 from 5 folds test on 5th fold (as 
 % specified in the adience benchmark
@@ -126,6 +127,7 @@ end
 disp(num2str(all/100));
 
 %% find images which weren't matched and show them
-idserror = imgIdsr==0;
-databse.img
+allImg = load('../data/adience/images_preproc/all_img.mat');
+idserror = imgIds{5}(r==1);
+database.img
 

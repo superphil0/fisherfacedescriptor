@@ -1,8 +1,7 @@
 
-%%
 startup
 
-%%
+%% read folds
 database ={};
  database.images = {};
  database.face_id = [];
@@ -47,13 +46,11 @@ end
 
 save('../data/shared/train_data/unrest_adience/img_idsaligned.mat', 'imgIds');
 save('../data/shared/info/databaseadiencealigned.mat', 'database');
-%%
-%begin computation
+%% crop images
 clear;
 startup;
-% read the files
 face_desc.prep_img.crop_adience
-%%
+%% calculate features
 allImg = load('../data/adience/images_preproc/all_img.mat');
 faces = allImg.faceImg;
 split = size(faces,2) / 10;
@@ -61,7 +58,7 @@ for i = 1:10
     features = face_desc.manager.face_descriptor.get_FV_Proj(faces((1:split)+(i-1)*split));
     save(['featuresall' num2str(i) '.mat'], 'features');
 end
-%% build trainingset
+%% build trainingset and run training
 load('../data/shared/info/databaseadiencealigned.mat', 'database');
 % already in right splits
 load('../data/shared/train_data/unrest_adience/img_idsaligned.mat', 'imgIds');
@@ -104,8 +101,9 @@ for lambda= 0.025
     end
     disp([num2str(erg) ' with ' num2str(lambda)]);
 end
-mean(erg)
-std(erg)
+disp(['mean correct classifications: ' num2str(mean(erg))]);
+disp(['std var of correct classifications: ' num2str(std(erg))]);
+
 %% adience result
 % train 100 times with all data 4 from 5 folds test on 5th fold (as 
 % specified in the adience benchmark
